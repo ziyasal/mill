@@ -46,6 +46,8 @@ object Target extends Applicative.Applyer[Task, Task, Result, Args]{
 
   def source(path: ammonite.ops.Path) = new Source(path)
 
+  def sources(paths: ammonite.ops.Path*) = paths.map(new Source(_))
+
   def command[T](t: Task[T]): Command[T] = new Command(t)
 
   def task[T](t: Result[T]): Task[T] = macro Applicative.impl[Task, T, Args]

@@ -36,6 +36,8 @@ object JavaCompileJarTests extends TestSuite{
         //           resourceRoot ---->  jar
         def sourceRoot = T.source{ sourceRootPath }
         def resourceRoot = T.source{ resourceRootPath }
+        def sourceRootEx = T.sources{ sourceRootPath }
+        def allSourcesEx = T{ sourceRootEx().map(x => ls.rec(x.path)).flatten.map(PathRef(_)) }
         def allSources = T{ ls.rec(sourceRoot().path).map(PathRef(_)) }
         def classFiles = T{ compileAll(T.ctx().dest, allSources()) }
         def jar = T{ jarUp(resourceRoot, classFiles) }
